@@ -1,0 +1,64 @@
+Using Download and install Tesseract
+	> https://digi.bib.uni-mannheim.de/tesseract/
+		>>Tesseract provides a handy command-line tool that you can use to perform OCR on images. 
+		  After you install Tesseract, open a CLI window, navigate to the folder where the image 
+		  file whose text you want to extract is located, and run the following command:  
+
+			>>> tesseract  out
+
+		  This command extracts text from the specified image and saves the text in the out.txt file. 
+		  To use Tesseract with Python, proceed to the next step to install the required Python packages.
+
+Requirements.txt -->
+	- pip install pillow
+	- pip install pytesseract
+
+Code -->
+	from PIL import Image
+	import pytesseract
+	pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+	print(pytesseract.image_to_string(Image.open('test.jpg')))
+
+
+	from PIL import Image
+	import pytesseract
+	pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+	print(pytesseract.image_to_string('images.txt'))
+
+
+
+Extract Text From Images in Python Using EasyOCR
+
+Requirements.txt -->
+	- pip install torch torchvision torchaudio
+	- pip install easyocr
+
+Code -->
+	import easyocr
+	reader = easyocr.Reader(['en'])
+	result = reader.readtext('test.jpg', detail = 0)
+	print(result)
+
+Using OCRopus -->
+	import ocrolib
+	image = ocrolib.read_image('image.jpg')
+	text = ocrolib.ocr(image)
+	print(text)
+
+Using PyOCR -->
+	import PIL.Image 
+	import pyocr
+	import pyocr.builders
+	tools = pyocr.get_available_tools() if len(tools) == 0: print("No OCR tool found.") exit(1)                                    ocr_tool = tools[0]
+	image = PIL.Image.open('image.jpg')
+	text = ocr_tool.image_to_string( image, builder=pyocr.builders.TextBuilder() )
+	print(text)
+
+Using Tesseract and OpenCV -->
+	> pip install pytesseract pip install opencv-python
+	import cv2 import pytesseract
+	image = cv2.imread('image.jpg')
+	text = pytesseract.image_to_string(image)
+	print(text)
+	
+
