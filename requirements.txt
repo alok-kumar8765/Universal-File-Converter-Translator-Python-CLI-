@@ -1,0 +1,18 @@
+# Install required libraries (run once in laptop)
+
+pypandoc 
+pdfplumber 
+python-docx 
+pandas 
+openpyxl 
+pillow 
+googletrans==4.0.0-rc1
+deep-translator
+reportlab
+tkinter
+tk
+wkhtmltopdf
+pdfkit
+python-docx
+langdetect
+pdfminer.six
