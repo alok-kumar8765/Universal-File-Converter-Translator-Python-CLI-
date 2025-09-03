@@ -2,7 +2,7 @@
 
 # About Project
 
-	``` 
+	 
 	This Project is designed to convert files extension
 	without affecting the content of the file.
 	A single Python script to **convert and translate files** between multiple formats: 
@@ -63,7 +63,7 @@
 		- Currently this translation feature worked when you are 
 		connected to internet, but we also have offfline mode which 
 		is little bulky size.
-	``` 
+	 
 	
 # You Get In This Repo
 
@@ -87,47 +87,48 @@
 
 # ⚙️ Installation
 
-```bash
 
-# Clone repo
-git clone https://github.com/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-.git
-cd your-repo
 
-# Install dependencies
-pip install -r requirements.txt
+	# Clone repo
+	git clone https://github.com/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-.git
+	cd your-repo
 
-```
+	# Install dependencies
+	pip install -r requirements.txt
+
+
+
 
 # Requirement 
 
 	| While installing the following requirements you might face some trouble, here is the solution
 	
-	- # Install required libraries (run in Colab / once in laptop)
-	- !pip install pypandoc pdfplumber python-docx pandas openpyxl pillow googletrans==4.0.0-rc1
-	- !pip install deep-translator
-	- !apt-get install pandoc
-	- !pip install pypandoc
-	- !pip install reportlab
+	 # Install required libraries (run in Colab / once in laptop)
+	 !pip install pypandoc pdfplumber python-docx pandas openpyxl pillow googletrans==4.0.0-rc1
+	 !pip install deep-translator
+	 !apt-get install pandoc
+	 !pip install pypandoc
+	 !pip install reportlab
 
 # How to Use
 
-	> Colab
+	- **Colab**
 
-		| Upload your files → Run cells → Call functions.
-		| Example:
-		```
-		 pdf_to_text("input.pdf", "output.txt")
-		 translate_file("input.pdf", "translated.txt", src_lang="en", dest_lang="fr")
+		- Upload your files → Run cells → Call functions.
+		- Example:
 		
-		```
-	> Offline (Laptop)
+			pdf_to_text("input.pdf", "output.txt")
+			translate_file("input.pdf", "translated.txt", src_lang="en", dest_lang="fr")
+		
+		
+	- **Offline (Laptop)**
 
-		| Install dependencies:
-		```
-		pip install pypandoc pdfplumber python-docx pandas openpyxl pillow googletrans==4.0.0-rc1
+		- Install dependencies:
+		
+			pip install pypandoc pdfplumber python-docx pandas openpyxl pillow googletrans==4.0.0-rc1
 
-		```
-	Run the script with python file_toolkit.py
+		
+	- Run the script with python file_toolkit.py
 
 # 🚀 Usage (CLI Tool in Colab / Local)
 
@@ -135,7 +136,7 @@ pip install -r requirements.txt
 
 When you run the program, you’ll see options to convert a TXT file into multiple formats.</small>
 
-```bash 
+```
 
 python file_toolkit_collab.py
 
@@ -143,7 +144,7 @@ python file_toolkit_collab.py
 
 # Sample CLI Flow:
 
-	```
+	
 	==== TXT File Converter ====
 	1. Convert TXT File
 	2. Exit
@@ -162,10 +163,11 @@ python file_toolkit_collab.py
 	Select target format (1-6): 5
 	✅ Converted successfully: /content/csv.xlsx
 
-	```
+	
 ## 🔹 1. Source & Target Language Codes
 
-	| You type language codes (ISO-639-1):
+	- You type language codes (ISO-639-1):
+	
 		| Language              | Code    |
 		| --------------------- | ------- |
 		| English               | `en`    |
@@ -182,39 +184,39 @@ python file_toolkit_collab.py
 		| Arabic                | `ar`    |
 		| Italian               | `it`    |
 	
-	👉 Example:
-	
+	- 👉 Example:
 	
 		-  src_lang = en, dest_lang = hi → English ➝ Hindi
+	
 		-  src_lang = auto, dest_lang = fr → Auto detect ➝ French
 	
 
 ## 🔹 2. Where to See the Translated File in Colab
 
-| After running, it saved your file as:
+- After running, it saved your file as:
 
-		``` file_name.txt ```
+			file_name.txt 
 
-	**-** 📍 Location: Colab working directory (/content/)
+	- 📍 Location: Colab working directory (/content/)
 
-		**-** To check:
+		- To check:
 
-			``` !ls ```
+			!ls
 	
-		**-** To open & read inside Colab:
+		- To open & read inside Colab:
 			
-			``` with open("B20442415 (5)_hi.txt", "r", encoding="utf-8") as f:
-					print(f.read()[:500])   # show first 500 chars
-			```
-		**-** To download to your laptop:
+			with open("B20442415 (5)_hi.txt", "r", encoding="utf-8") as f:
+				print(f.read()[:500])   # show first 500 chars
 			
-			``` from google.colab import files
+		- To download to your laptop:
+			
+			from google.colab import files
 				files.download("B20442415 (5)_hi.txt")
-			```
+			
 
-### Error while translation developer might face
+# Error while translation developer might face
 	
-> 🔹 Why It Didn’t Translate
+- **🔹 Why It Didn’t Translate**
 
 	1. If the input text is too long, Google rejects it. 
 	
@@ -223,11 +225,11 @@ python file_toolkit_collab.py
 	3. Some versions of googletrans are broken in Colab. 
 	
 	
-> 🔹 Solution: Split Text into Chunks
+- **🔹 Solution: Split Text into Chunks**
 
-- We will split the text into smaller pieces, translate each, then join them.
+	- We will split the text into smaller pieces, translate each, then join them.
 
-		``` from deep_translator import GoogleTranslator
+			from deep_translator import GoogleTranslator
 
 			def translate_text(text, src_lang="auto", dest_lang="en"):
 				translated_chunks = []
@@ -238,17 +240,17 @@ python file_toolkit_collab.py
 					translated = GoogleTranslator(source=src_lang, target=dest_lang).translate(chunk)
 					translated_chunks.append(translated)
 				return "\n".join(translated_chunks)
-		```
+		
 
 # 📌 Badges
 
 ![Build Status](https://img.shields.io/github/actions/workflow/status/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/ci.yml?branch=main)  
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)  
-![License](https://img.shields.io/github/license/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/)  
-![Code Coverage](https://img.shields.io/codecov/c/github/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/)  
-![Issues](https://img.shields.io/github/issues/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/)  
-![Pull Requests](https://img.shields.io/github/issues-pr/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/)  
-![Last Commit](https://img.shields.io/github/last-commit/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/)  
+![License](https://img.shields.io/github/license/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-)  
+![Code Coverage](https://img.shields.io/codecov/c/github/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-)  
+![Issues](https://img.shields.io/github/issues/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-)  
+![Pull Requests](https://img.shields.io/github/issues-pr/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-)  
+![Last Commit](https://img.shields.io/github/last-commit/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-)  
 
 # 📦 Docker Support
 
