@@ -346,8 +346,6 @@ def pdf_to_csv(pdf_path, csv_path=None, xlsx_path=None,
             pass
         raise RuntimeError(f"Error converting PDF to CSV/XLSX: {exc}") from exc
 
-
-
 def pdf_to_xls(pdf_path, xls_path):
     wb = Workbook(write_only=True)
     ws = wb.create_sheet("Sheet1")

@@ -58,17 +58,17 @@ def schedule_delete(file_path, delay=300):  # 300 sec = 5 minutes
 
 def doc_to_txt(docx_path, txt_path):
     try:
-      doc = Document(docx_path)
-      with open(txt_path, "w", encoding="utf-8") as out:
-          # Paragraphs
-          for para in doc.paragraphs:
-              out.write((para.text or "") + "\n")
-          # Tables (append as TSV)
-          for table in doc.tables:
-              for row in table.rows:
-                  cells = [c.text.replace("\n"," ").strip() for c in row.cells]
-                  out.write("\t".join(cells) + "\n")
-      return txt_path
+        doc = Document(docx_path)
+        with open(txt_path, "w", encoding="utf-8") as out:
+            # Paragraphs
+            for para in doc.paragraphs:
+                out.write((para.text or "") + "\n")
+            # Tables (append as TSV)
+            for table in doc.tables:
+                for row in table.rows:
+                    cells = [c.text.replace("\n"," ").strip() for c in row.cells]
+                    out.write("\t".join(cells) + "\n")
+        return txt_path
     except Exception as e:
       raise RuntimeError(f"Error converting DOCX to TXT: {e}") from e
 

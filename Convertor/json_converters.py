@@ -193,6 +193,7 @@ def json_to_image(json_path, output_path):
     try:
         if not json_path.endswith(".json"):
             raise RuntimeError("❌ Only JSON files are supported!")
+            
         if not os.path.exists(json_path):
             raise RuntimeError("❌ File not found!")
 
@@ -363,8 +364,9 @@ def json_to_txt(json_path, txt_path):
         return txt_path
 
     except Exception as e:
-        raise RuntimeError(f"❌ Conversion failed: {e}")
-
+        print(f"❌ JSON to TXT failed: {e}")
+        return None
+        
 #-------------------- Json To CSV ----------------------------------#
 def json_to_csv(json_path, csv_path):
     """
@@ -375,10 +377,10 @@ def json_to_csv(json_path, csv_path):
     """
     try:
         if not json_path.endswith(".json"):
-                  raise RuntimeError("❌ Only JSON files are supported!")
+            raise RuntimeError("❌ Only JSON files are supported!")
 
         if not os.path.exists(json_path):
-                  raise RuntimeError("❌ File not found!")
+            raise RuntimeError("❌ File not found!")
 
         with open(csv_path, "w", encoding="utf-8-sig", newline="") as out:
             # utf-8-sig ensures Excel also reads Hindi properly
@@ -423,9 +425,9 @@ def json_to_csv(json_path, csv_path):
         return csv_path
 
     except Exception as e:
-        print(f"❌ Conversion failed: {e}")
+        print(f"❌ JSON to CSV failed: {e}")
         return None
-
+        
 # ----------------------- JSON To XLS --------------------------------------#
 def flatten_json(obj, parent_key="", sep="."):
     """Flatten nested JSON (dicts/lists) into key-value pairs."""
@@ -450,6 +452,12 @@ def json_to_xls(json_path, xls_path):
     - Flattens nested JSON
     """
     try:
+        if not json_path.endswith(".json"):
+            raise RuntimeError("❌ Only JSON files are supported!")
+
+        if not os.path.exists(json_path):
+            raise RuntimeError("❌ File not found!")
+
         wb = Workbook(write_only=True)
         ws = wb.create_sheet("Sheet1")
 
@@ -496,7 +504,7 @@ def json_to_xls(json_path, xls_path):
         return xls_path
 
     except Exception as e:
-        print("❌ Error:", e)
+        print(f"❌ JSON to XLSX failed: {e}")
         return None
 
 def schedule_delete(file_path, delay=300):  # 5 minutes

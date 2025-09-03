@@ -477,16 +477,20 @@ def txt_to_xls(txt_path, xls_path, delimiter="\t"):
 
 def txt_to_json(txt_path, json_path):
     # Converts each non-empty line to list; if delimiter-like structure exists, user can post-process.
-    data = []
-    with open(txt_path, "r", encoding="utf-8", errors="ignore") as f:
-        for line in f:
-            s = line.strip()
-            if s:
-                data.append(s)
-    with open(json_path, "w", encoding="utf-8") as out:
-        json.dump(data, out, ensure_ascii=False, indent=2)
-    return json_path
+    try:
+        data = []
+        with open(txt_path, "r", encoding="utf-8", errors="ignore") as f:
+            for line in f:
+                s = line.strip()
+                if s:
+                    data.append(s)
+        with open(json_path, "w", encoding="utf-8") as out:
+            json.dump(data, out, ensure_ascii=False, indent=2)
+        return json_path
 
+    except Exception as e:
+        print(f"❌ TXT to JSON failed: {e}")
+        return None
 
 # ---------------- CLI MENU ---------------- #
 
