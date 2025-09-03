@@ -64,70 +64,87 @@
 		connected to internet, but we also have offfline mode which 
 		is little bulky size.
 	``` 
+---
 	
 # You Get In This Repo
 
- - Script Code for Translation & Convert File, which run in you local machine.
- - Executable file which is helpful for non coding bacground person, as they can simply install this software in their  machine and use it.
- - Code that run in google colab.
+
+- Script Code for Translation & Convert File, which run in you local machine.
+
+- Executable file which is helpful for non coding bacground person, as they can simply install this software in their  machine and use it.
+
+- Code that run in google colab.
+
+---
 
 # Libraries We’ll Use
 
-	- pypandoc → Convert between docx, pdf, txt, md, rtf.
+- pypandoc → Convert between docx, pdf, txt, md, rtf.
 
-	- pdfplumber / PyMuPDF → Extract text from PDF.
+- pdfplumber / PyMuPDF → Extract text from PDF.
 
-	- python-docx → Handle .docx.
+- python-docx → Handle .docx.
 
-	- pandas → Handle CSV/XLS.
+- pandas → Handle CSV/XLS.
 
-	- PIL → Save text as image.
+- PIL → Save text as image.
 
-	- googletrans (or deep-translator) → Translate text between languages. 
+- googletrans (or deep-translator) → Translate text between languages. 
+
+---
 
 # ⚙️ Installation
 
-```bash
+	```bash
 
-# Clone repo
-git clone https://github.com/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-.git
-cd your-repo
+	# Clone repo
+	git clone https://github.com/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-.git
+	cd your-repo
 
-# Install dependencies
-pip install -r requirements.txt
+	# Install dependencies
+	pip install -r requirements.txt
 
-```
+	```
+---
 
 # Requirement 
 
-	| While installing the following requirements you might face some trouble, here is the solution
+| While installing the following requirements you might face some trouble, here is the solution
 	
-	- # Install required libraries (run in Colab / once in laptop)
-	- !pip install pypandoc pdfplumber python-docx pandas openpyxl pillow googletrans==4.0.0-rc1
-	- !pip install deep-translator
-	- !apt-get install pandoc
-	- !pip install pypandoc
-	- !pip install reportlab
+	 ```# Install required libraries (run in Colab / once in laptop)```
+	 !pip install pypandoc pdfplumber python-docx pandas openpyxl pillow googletrans==4.0.0-rc1
+	 !pip install deep-translator
+	 !apt-get install pandoc
+	 !pip install pypandoc
+	 !pip install reportlab
+
+---
 
 # How to Use
 
-	> Colab
+- **Colab**
 
-		| Upload your files → Run cells → Call functions.
-		| Example:
-		```
-		 pdf_to_text("input.pdf", "output.txt")
-		 translate_file("input.pdf", "translated.txt", src_lang="en", dest_lang="fr")
-		
-		```
-	> Offline (Laptop)
+- Upload your files → Run cells → Call functions.
+- Example:
 
-		| Install dependencies:
-		```
+	```
+		pdf_to_text("input.pdf", "output.txt")
+		translate_file("input.pdf", "translated.txt", src_lang="en", dest_lang="fr")
+			
+	```
+
+- **Offline (Laptop)**
+
+- Install dependencies:
+
+	```
 		pip install pypandoc pdfplumber python-docx pandas openpyxl pillow googletrans==4.0.0-rc1
 
-		```
-	Run the script with python file_toolkit.py
+	```
+
+- Run the script with python file_toolkit.py
+
+---
 
 # 🚀 Usage (CLI Tool in Colab / Local)
 
@@ -135,15 +152,15 @@ pip install -r requirements.txt
 
 When you run the program, you’ll see options to convert a TXT file into multiple formats.</small>
 
-```bash 
+	```bash 
 
-python file_toolkit_collab.py
+	python file_toolkit_collab.py
 
-```
+	```
 
 # Sample CLI Flow:
 
-	```
+	
 	==== TXT File Converter ====
 	1. Convert TXT File
 	2. Exit
@@ -162,7 +179,8 @@ python file_toolkit_collab.py
 	Select target format (1-6): 5
 	✅ Converted successfully: /content/csv.xlsx
 
-	```
+---
+	
 ## 🔹 1. Source & Target Language Codes
 
 	| You type language codes (ISO-639-1):
@@ -183,41 +201,54 @@ python file_toolkit_collab.py
 		| Italian               | `it`    |
 	
 	👉 Example:
-	<ul>
-		<li> src_lang = en, dest_lang = hi → English ➝ Hindi </li>
-		<li> src_lang = auto, dest_lang = fr → Auto detect ➝ French </li>
-	</ul>
+	
+		> src_lang = en, dest_lang = hi → English ➝ Hindi
+		
+		> src_lang = auto, dest_lang = fr → Auto detect ➝ French
+
+---
 
 ## 🔹 2. Where to See the Translated File in Colab
 
-	| After running, it saved your file as:
-		``` file_name.txt ```
+| After running, it saved your file as:
+
+	``` file_name.txt ```
 	
-	| 📍 Location: Colab working directory (/content/)
-		| To check:
-			``` !ls ```
+| 📍 Location: Colab working directory (/content/)
+
+	| To check:
+
+		``` !ls ```
 	
-		| To open & read inside Colab:
-			``` with open("B20442415 (5)_hi.txt", "r", encoding="utf-8") as f:
-				print(f.read()[:500])   # show first 500 chars
-			```
-		| To download to your laptop:
-			``` from google.colab import files
-				files.download("B20442415 (5)_hi.txt")
-			```
+	| To open & read inside Colab:
+
+		 with open("B20442415 (5)_hi.txt", "r", encoding="utf-8") as f:
+			print(f.read()[:500])   # show first 500 chars
+		
+		
+	| To download to your laptop:
+	
+		 from google.colab import files
+			files.download("B20442415 (5)_hi.txt")
+		
+---
 
 ### Error while translation developer might face
 	
-	> 🔹 Why It Didn’t Translate
-		<ul>
-			<li>1. If the input text is too long, Google rejects it. </li>
-			<li>2. If you pass the entire PDF/doc content at once, it fails silently. </li>
-			<li>3. Some versions of googletrans are broken in Colab. </li>
-		</ul>
+> 🔹 Why It Didn’t Translate
+
+- **1.** If the input text is too long, Google rejects it. 
+
+- **2.** If you pass the entire PDF/doc content at once, it fails silently.
+
+- **3.** Some versions of googletrans are broken in Colab. 
 	
-	> 🔹 Solution: Split Text into Chunks
-		- We will split the text into smaller pieces, translate each, then join them.
-		``` from deep_translator import GoogleTranslator
+> 🔹 Solution: Split Text into Chunks
+
+
+- We will split the text into smaller pieces, translate each, then join them.
+
+		 from deep_translator import GoogleTranslator
 
 			def translate_text(text, src_lang="auto", dest_lang="en"):
 				translated_chunks = []
@@ -228,7 +259,8 @@ python file_toolkit_collab.py
 					translated = GoogleTranslator(source=src_lang, target=dest_lang).translate(chunk)
 					translated_chunks.append(translated)
 				return "\n".join(translated_chunks)
-		```
+		
+---
 
 # 📌 Badges
 
@@ -240,39 +272,45 @@ python file_toolkit_collab.py
 ![Pull Requests](https://img.shields.io/github/issues-pr/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-)  
 ![Last Commit](https://img.shields.io/github/last-commit/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-)  
 
+---
+
 # 📦 Docker Support
 
-Build:	bash
+- Build:	bash
+
 ```
 docker build -t file-toolkit .
 ```
 
-Run: bash
+- Run: bash
+
 ```
 docker run -it file-toolkit
 ```
 
+---
+
 # 🛠️ Development & Contributing
 
-<ul>
-	<li>Fork the repo</li>
 
-	<li>Add new converters in <strong>unified_converter.py</strong></li>
+- Fork the repo
 
-	<li>Create pull requests</li>
-</ul>
+- Add new converters in <sub>**unified_converter.py**</sub>
+
+- Create pull requests
+
+---
 
 # 🌍 Roadmap
 
- <ul>
- 
-	<li>OCR for Images</li>
 
-	</li>Web UI (Streamlit/Gradio)</li>
+- OCR for Images
 
-	<li>HuggingFace Spaces demo</li>
+- Web UI (Streamlit/Gradio)
+
+- HuggingFace Spaces demo
  
- </ul>
+---
  
  # Google Colab 
  

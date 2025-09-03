@@ -191,33 +191,42 @@ python file_toolkit_collab.py
 
 ## 🔹 2. Where to See the Translated File in Colab
 
-	| After running, it saved your file as:
+| After running, it saved your file as:
+
 		``` file_name.txt ```
-	
-	| 📍 Location: Colab working directory (/content/)
-		| To check:
+
+	**-** 📍 Location: Colab working directory (/content/)
+
+		**-** To check:
+
 			``` !ls ```
 	
-		| To open & read inside Colab:
+		**-** To open & read inside Colab:
+			
 			``` with open("B20442415 (5)_hi.txt", "r", encoding="utf-8") as f:
-				print(f.read()[:500])   # show first 500 chars
+					print(f.read()[:500])   # show first 500 chars
 			```
-		| To download to your laptop:
+		**-** To download to your laptop:
+			
 			``` from google.colab import files
 				files.download("B20442415 (5)_hi.txt")
 			```
 
 ### Error while translation developer might face
 	
-	> 🔹 Why It Didn’t Translate
-		<ul>
-			<li>1. If the input text is too long, Google rejects it. </li>
-			<li>2. If you pass the entire PDF/doc content at once, it fails silently. </li>
-			<li>3. Some versions of googletrans are broken in Colab. </li>
-		</ul>
+> 🔹 Why It Didn’t Translate
+
+	1. If the input text is too long, Google rejects it. 
 	
-	> 🔹 Solution: Split Text into Chunks
-		- We will split the text into smaller pieces, translate each, then join them.
+	2. If you pass the entire PDF/doc content at once, it fails silently. 
+	
+	3. Some versions of googletrans are broken in Colab. 
+	
+	
+> 🔹 Solution: Split Text into Chunks
+
+- We will split the text into smaller pieces, translate each, then join them.
+
 		``` from deep_translator import GoogleTranslator
 
 			def translate_text(text, src_lang="auto", dest_lang="en"):
