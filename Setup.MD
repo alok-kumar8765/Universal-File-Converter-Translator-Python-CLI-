@@ -97,16 +97,16 @@
 
 
 # Manual Font Download
-
-``` # Open Your Browser.
-
-#URL open :
-
-https://github.com/googlefonts/noto-fonts/blob/main/hinted/ttf/NotoSans/NotoSans-Regular.ttf
-
-#Download raw file .
-
-# Save File in project folder nameds as NotoSans-Regular.ttf .```
+	
+	# Open Your Browser.
+	
+	#URL open :
+	
+	https://github.com/googlefonts/noto-fonts/blob/main/hinted/ttf/NotoSans/NotoSans-Regular.ttf
+	
+	#Download raw file .
+	
+	# Save File in project folder nameds as NotoSans-Regular.ttf .
 
 
 # 📌 Why Poppler is Required?
@@ -177,4 +177,5 @@ After installation, check if Poppler is working:
 	pdftoppm -h
 
 	
+
 
