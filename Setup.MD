@@ -7,7 +7,7 @@
 	. ✅ Create virtual environment (Windows)
 		
 		- # In Windows Powershell:
-		- cd file-convertor_&_translator
+		- cd Universal-File-Converter-Translator-Python-CLI-
 
 		- # Create venv
 		- python -m venv venv
@@ -21,6 +21,8 @@
 
 	
 	. Run
+	
+	
 		- python -m venv venv
 		- source venv/bin/activate         # On Linux/Mac
 		- venv\Scripts\activate            # On Windows
@@ -29,11 +31,11 @@
 
 # Real Desktop App (EXE)
 
-	<ul>
-		<li><b>1.</b> Has a GUI (Tkinter/PyQt) with file upload buttons, not typing paths. </li>
-		<li><b>2.</b> Works as an EXE installer (download from GitHub → install like normal software).</li>
-		<li><b>3.</b> Runs offline translation (no internet needed, unlike Google Translate).</li>
-	</ul>
+	
+	- **1.** Has a GUI (Tkinter/PyQt) with file upload buttons, not typing paths. 
+	- **2.** Works as an EXE installer (download from GitHub → install like normal software).
+	- **3.** Runs offline translation (no internet needed, unlike Google Translate).
+	
 
 	- There is a Tkinter-based file v1(basic script) conversion + translation tool:
 	- This GUI v1 support less that 1 mb file for conversion and support offline translation, for offline translation we as using a model "Helsinki-NLP model".
@@ -55,13 +57,16 @@
 	
 	## 🔹 3. Offline Translation
 	
-		<ul>
-			<li> Using Helsinki-NLP/MarianMT models (small but powerful).</li>
-			<li> First run downloads the model (100–300 MB) and caches it.</li>
-			<li> After that → works 100% offline.</li>
-			<li> Example: en → hi, en → fr, fr → de, etc.</li>
-			<li> <strong>Note : </strong> The only catch: first run will download the translation model (unless we package it with the EXE).</li>
-		</ul>
+		- Using Helsinki-NLP/MarianMT models (small but powerful).
+		
+		- First run downloads the model (100–300 MB) and caches it.
+		
+		- After that → works 100% offline.
+		
+		- Example: en → hi, en → fr, fr → de, etc.
+		
+		- **Note : ** The only catch: first run will download the translation model ***(unless we package it with the EXE)***.
+		
 
 # Fonts Download
 
@@ -89,6 +94,7 @@
 
 	```
 # Manual Font Download
+
 ``` # Browser open karo.
 
 #URL open karo:
@@ -116,13 +122,20 @@ So, installing Poppler is necessary for smooth PDF → PNG/JPG conversions.
 ## ⚙️ Poppler Installation Guide
 
 	### 🖥 Windows
+	
 	1. Download latest Poppler build from:  
 	   👉 [Poppler for Windows (Releases)](https://github.com/oschwartz10612/poppler-windows/releases/)
+	   
 	2. Extract the ZIP file (e.g., `poppler-xx/bin/`).
+	
 	3. Copy the **path of the `bin` folder** (e.g., `C:\poppler-xx\bin`).
+	
 	4. Add it to **System PATH**:  
-	   - Press `Win + R` → type `sysdm.cpl` → *Advanced* → *Environment Variables*.  
+	
+	- Press `Win + R` → type `sysdm.cpl` → *Advanced* → *Environment Variables*.  
+
 	   - Edit `Path` → Add new → Paste your Poppler `bin/` path.  
+	
 	5. Restart terminal / IDE. ✅
 
 ---

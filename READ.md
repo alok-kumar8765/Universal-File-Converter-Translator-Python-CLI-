@@ -90,7 +90,7 @@
 ```bash
 
 # Clone repo
-git clone https://github.com/your-username/your-repo.git
+git clone https://github.com/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-.git
 cd your-repo
 
 # Install dependencies
@@ -183,10 +183,11 @@ python file_toolkit_collab.py
 		| Italian               | `it`    |
 	
 	👉 Example:
-	<ul>
-		<li> src_lang = en, dest_lang = hi → English ➝ Hindi </li>
-		<li> src_lang = auto, dest_lang = fr → Auto detect ➝ French </li>
-	</ul>
+	
+	
+		-  src_lang = en, dest_lang = hi → English ➝ Hindi
+		-  src_lang = auto, dest_lang = fr → Auto detect ➝ French
+	
 
 ## 🔹 2. Where to See the Translated File in Colab
 
@@ -232,47 +233,46 @@ python file_toolkit_collab.py
 
 # 📌 Badges
 
-![Build Status](https://img.shields.io/github/actions/workflow/status/USERNAME/REPO/ci.yml?branch=main)  
+![Build Status](https://img.shields.io/github/actions/workflow/status/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/ci.yml?branch=main)  
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)  
-![License](https://img.shields.io/github/license/USERNAME/REPO)  
-![Code Coverage](https://img.shields.io/codecov/c/github/USERNAME/REPO)  
-![Issues](https://img.shields.io/github/issues/USERNAME/REPO)  
-![Pull Requests](https://img.shields.io/github/issues-pr/USERNAME/REPO)  
-![Last Commit](https://img.shields.io/github/last-commit/USERNAME/REPO)  
+![License](https://img.shields.io/github/license/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/)  
+![Code Coverage](https://img.shields.io/codecov/c/github/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/)  
+![Issues](https://img.shields.io/github/issues/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/)  
+![Pull Requests](https://img.shields.io/github/issues-pr/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/)  
+![Last Commit](https://img.shields.io/github/last-commit/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/)  
 
 # 📦 Docker Support
 
-Build:	bash
+**Build:	bash**
+
 ```
 docker build -t file-toolkit .
 ```
 
-Run: bash
+**Run:		bash**
+
 ```
 docker run -it file-toolkit
 ```
 
 # 🛠️ Development & Contributing
 
-<ul>
-	<li>Fork the repo</li>
 
-	<li>Add new converters in <strong>unified_converter.py</strong></li>
+	- Fork the repo
 
-	<li>Create pull requests</li>
-</ul>
+	- Add new converters in **unified_converter.py**
+
+	- Create pull requests
 
 # 🌍 Roadmap
-
- <ul>
  
-	<li>OCR for Images</li>
-
-	</li>Web UI (Streamlit/Gradio)</li>
-
-	<li>HuggingFace Spaces demo</li>
  
- </ul>
+	- OCR for Images
+
+	- Web UI (Streamlit/Gradio)
+
+	- HuggingFace Spaces demo
+ 
  
  # Google Colab 
  
