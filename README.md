@@ -271,7 +271,7 @@ When you run the program, you’ll see options to convert a TXT file into multip
 ![Issues](https://img.shields.io/github/issues/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-)  
 ![Pull Requests](https://img.shields.io/github/issues-pr/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-)  
 ![Last Commit](https://img.shields.io/github/last-commit/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-)  
-[![Build](https://github.com/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/actions/workflows/python-package.yml/badge.svg)](https://github.com/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/actions/workflows/python-package.yml)
+[![Build](https://github.com/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/actions/workflows/python-package.yml/badge.svg)](https://github.com/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/blob/main/.github/workflows/python.yml)
 
 A universal file converter and translator with support for CSV, PDF, DOCX, TXT, JSON, Images, and more.
 
