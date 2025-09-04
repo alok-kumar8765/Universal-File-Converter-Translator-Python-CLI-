@@ -34,4 +34,4 @@ jobs:
 
       - name: Run quick tests only
         run: |
-            pytest -m "quick" -v
+          pytest -m "quick" -v
