@@ -33,6 +33,7 @@ torch
 torchvision
 torchaudio
 tesseract
+regex
 
 # ======================================
 # Install tesseract & check languages
