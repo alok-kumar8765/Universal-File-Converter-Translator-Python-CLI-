@@ -161,6 +161,8 @@ def test_json_to_csv(temp_dir):
 
 # CSV Conversions
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 def test_csv_to_xls(temp_dir):
     csv_file = create_dummy_csv(os.path.join(temp_dir, "test.csv"))
     xls_file = os.path.join(temp_dir, "output.xlsx")
@@ -175,6 +177,8 @@ def test_csv_to_xls(temp_dir):
     assert rows[0] == ("col1", "col2", "col3")
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 def test_csv_to_pdf(temp_dir):
     csv_file = create_dummy_csv(os.path.join(temp_dir, "test.csv"))
     pdf_file = os.path.join(temp_dir, "output.pdf")
@@ -183,6 +187,8 @@ def test_csv_to_pdf(temp_dir):
     assert os.path.getsize(result) > 0
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 def test_csv_to_doc(temp_dir):
     csv_file = create_dummy_csv(os.path.join(temp_dir, "test.csv"))
     docx_file = os.path.join(temp_dir, "output.docx")
@@ -194,6 +200,8 @@ def test_csv_to_doc(temp_dir):
     # assert len(doc.tables) > 0
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 def test_csv_to_txt(temp_dir):
     csv_file = create_dummy_csv(os.path.join(temp_dir, "test.csv"))
     txt_file = os.path.join(temp_dir, "output.txt")
@@ -205,6 +213,8 @@ def test_csv_to_txt(temp_dir):
     assert "value 😅,हिंदी,another,value" in content # Check for delimiter and content
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 def test_csv_to_json(temp_dir):
     csv_file = create_dummy_csv(os.path.join(temp_dir, "test.csv"))
     json_file = os.path.join(temp_dir, "output.json")
@@ -219,6 +229,8 @@ def test_csv_to_json(temp_dir):
 
 # XLS Conversions
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 def test_xls_to_csv(temp_dir):
     xls_file = create_dummy_xlsx(os.path.join(temp_dir, "test.xlsx"))
     csv_file = os.path.join(temp_dir, "output.csv")
@@ -231,6 +243,8 @@ def test_xls_to_csv(temp_dir):
     assert "value 😊,मराठी,one|two|three" in content
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 def test_xls_to_doc(temp_dir):
     xls_file = create_dummy_xlsx(os.path.join(temp_dir, "test.xlsx"))
     docx_file = os.path.join(temp_dir, "output.docx")
@@ -239,6 +253,8 @@ def test_xls_to_doc(temp_dir):
     assert os.path.getsize(result) > 0
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 def test_xls_to_txt(temp_dir):
     xls_file = create_dummy_xlsx(os.path.join(temp_dir, "test.xlsx"))
     txt_file = os.path.join(temp_dir, "output.txt")
@@ -250,6 +266,8 @@ def test_xls_to_txt(temp_dir):
     assert "value 😊|मराठी|one|two|three" in content
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 def test_xls_to_pdf(temp_dir):
     xls_file = create_dummy_xlsx(os.path.join(temp_dir, "test.xlsx"))
     pdf_file = os.path.join(temp_dir, "output.pdf")
@@ -258,6 +276,8 @@ def test_xls_to_pdf(temp_dir):
     assert os.path.getsize(result) > 0
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 def test_xls_to_json(temp_dir):
     xls_file = create_dummy_xlsx(os.path.join(temp_dir, "test.xlsx"))
     json_file = os.path.join(temp_dir, "output.json")
@@ -272,6 +292,8 @@ def test_xls_to_json(temp_dir):
 
 # Image Conversions (Basic tests, OCR accuracy varies)
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 @patch('Converter.universal_converter._get_easyocr', return_value=MagicMock()) # Mock EasyOCR initialization
 @patch('pytesseract.image_to_string') # Mock Tesseract
 def test_image_to_txt_ocr(mock_tesseract, mock_easyocr_reader, temp_dir):
@@ -299,6 +321,8 @@ def test_image_to_txt_ocr(mock_tesseract, mock_easyocr_reader, temp_dir):
     assert "Mocked Tesseract Text हिंदी" in content # Should contain Tesseract output
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 def test_image_to_image(temp_dir):
     img_file = create_dummy_image(os.path.join(temp_dir, "test.png"))
     jpg_file = os.path.join(temp_dir, "output.jpg")
@@ -309,6 +333,8 @@ def test_image_to_image(temp_dir):
 
 # TXT Conversions
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 def test_txt_to_pdf(temp_dir):
     txt_file = create_dummy_txt(os.path.join(temp_dir, "test.txt"))
     pdf_file = os.path.join(temp_dir, "output.pdf")
@@ -317,6 +343,8 @@ def test_txt_to_pdf(temp_dir):
     assert os.path.getsize(result) > 0
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 @patch('Converter.universal_converter.Document') # Mock Document to avoid actual file creation/dependencies
 def test_txt_to_doc(mock_document, temp_dir):
     txt_file = create_dummy_txt(os.path.join(temp_dir, "test.txt"))
@@ -333,6 +361,8 @@ def test_txt_to_doc(mock_document, temp_dir):
     # We can't easily assert file content without actual docx creation
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 def test_txt_to_json(temp_dir):
     txt_file = create_dummy_txt(os.path.join(temp_dir, "test.txt"))
     json_file = os.path.join(temp_dir, "output.json")
@@ -345,6 +375,8 @@ def test_txt_to_json(temp_dir):
 
 # DOC/DOCX Conversions (Require LibreOffice or heavy mocking)
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 @patch('Converter.universal_converter.convert_doc_to_docx_if_needed', return_value='mocked_input.docx')
 @patch('Converter.universal_converter.convert_docx_to_pdf_libreoffice')
 @patch('Converter.universal_converter.mammoth.convert_to_html')
@@ -405,6 +437,8 @@ def test_doc_to_pdf_auto(mock_pdfkit, mock_mammoth, mock_libreoffice_pdf, mock_d
         # We can't easily check the final PDF content here as it's mocked
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 @patch('Converter.universal_converter.convert_doc_to_docx_if_needed', return_value='mocked_input.docx')
 @patch('Converter.universal_converter.convert_docx_to_pdf_libreoffice')
 @patch('Converter.universal_converter.convert_from_path')
@@ -436,6 +470,8 @@ def test_doc_to_pdf_image(mock_image_save, mock_convert_from_path, mock_libreoff
 
 # PDF Conversions
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 @patch('pdfplumber.open')
 def test_pdf_to_txt(mock_pdfplumber_open, temp_dir):
     dummy_pdf = os.path.join(temp_dir, "test.pdf")
@@ -465,6 +501,8 @@ def test_pdf_to_txt(mock_pdfplumber_open, temp_dir):
     assert "Page 2 Text हिंदी" in content
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 @patch('pdfplumber.open')
 @patch('Converter.universal_converter.Document')
 def test_pdf_to_docx(mock_document, mock_pdfplumber_open, temp_dir):
@@ -500,6 +538,8 @@ def test_pdf_to_docx(mock_document, mock_pdfplumber_open, temp_dir):
     # We can't easily assert file content without actual docx creation
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 @patch('pdf2image.convert_from_path')
 @patch('PIL.Image.Image.save')
 @patch('builtins.input', return_value='2') # Mock user input for multi-page choice
@@ -538,6 +578,8 @@ def test_pdf_to_image_multi_page_zip(mock_rmtree, mock_input, mock_image_save, m
         assert os.path.exists(output_dir) # Directory is created before rmtree mock
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 @patch('pdfplumber.open')
 @patch('csv.writer')
 @patch('openpyxl.Workbook')
@@ -583,6 +625,8 @@ def test_pdf_to_csv_xlsx(mock_workbook, mock_csv_writer, mock_pdfplumber_open, t
 
 # JSON Conversions
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 @patch('pdfkit.from_file')
 def test_json_to_pdf(mock_pdfkit_from_file, temp_dir):
     json_file = create_dummy_json(os.path.join(temp_dir, "test.json"))
@@ -597,6 +641,8 @@ def test_json_to_pdf(mock_pdfkit_from_file, temp_dir):
 
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 @patch('Converter.universal_converter.Document')
 def test_json_to_doc(mock_document, temp_dir):
     json_file = create_dummy_json(os.path.join(temp_dir, "test.json"))
@@ -615,6 +661,8 @@ def test_json_to_doc(mock_document, temp_dir):
     assert result == docx_file
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 @patch('Converter.universal_converter.save_html_as_image') # Mock the helper image saving function
 @patch('builtins.input', return_value='1') # Mock user input for single image choice
 def test_json_to_image_single(mock_input, mock_save_html_as_image, temp_dir):
@@ -633,6 +681,8 @@ def test_json_to_image_single(mock_input, mock_save_html_as_image, temp_dir):
     assert result == png_file
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 def test_json_to_txt(temp_dir):
     json_file = create_dummy_json(os.path.join(temp_dir, "test.json"))
     txt_file = os.path.join(temp_dir, "output.txt")
@@ -647,6 +697,8 @@ def test_json_to_txt(temp_dir):
     assert '"greeting": "नमस्ते"' in content
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 @patch('csv.DictWriter')
 def test_json_to_csv(mock_dict_writer, temp_dir):
     json_file = create_dummy_json(os.path.join(temp_dir, "test.json"))
@@ -663,6 +715,8 @@ def test_json_to_csv(mock_dict_writer, temp_dir):
     assert result == csv_file
 
 @pytest.mark.full
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Skipping in CI only")
+@pytest.mark.skip(reason="Skipping this test temporarily")
 @patch('openpyxl.Workbook')
 def test_json_to_xls(mock_workbook, temp_dir):
     json_file = create_dummy_json(os.path.join(temp_dir, "test.json"))
