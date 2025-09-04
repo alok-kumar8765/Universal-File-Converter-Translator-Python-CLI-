@@ -91,9 +91,9 @@ def temp_dir(request):
     return tmpdir
 
 # --- Mock the schedule_delete function ---
-@pytest.fixture(autouse=True)
+@@pytest.fixture(autouse=True)
 def mock_schedule_delete():
-    with patch('__main__.schedule_delete') as mock_delete: # Adjust '__main__' if importing
+    with patch('converter.universal_converter.schedule_delete') as mock_delete:
         yield mock_delete
 
 # --- Test Cases ---
