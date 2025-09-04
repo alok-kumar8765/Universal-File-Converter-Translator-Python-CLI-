@@ -44,6 +44,8 @@ from langdetect import detect
 from docx.shared import Inches
 from docx.oxml import OxmlElement
 from openpyxl.styles import Font
+from openpyxl.cell import WriteOnlyCell
+
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.units import cm

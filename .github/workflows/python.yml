@@ -33,4 +33,5 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}   # only needed for private repos
 
       - name: Run quick tests only
-        run: pytest -m quick --maxfail=1 --disable-warnings -q
+        run: |
+            pytest -m "quick" -v

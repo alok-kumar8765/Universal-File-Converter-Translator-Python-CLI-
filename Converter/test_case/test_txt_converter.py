@@ -11,6 +11,7 @@ import shutil
 import tempfile
 import pytest
 from unittest.mock import patch, MagicMock
+from openpyxl.cell import WriteOnlyCell
 
 import Converter.universal_converter as uc
 
