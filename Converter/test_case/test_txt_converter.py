@@ -27,7 +27,7 @@ from Converter.universal_converter import (
     image_to_txt_ocr, image_to_image,
     txt_to_pdf, txt_to_doc, txt_to_json, txt_to_csv, txt_to_image,
     doc_to_pdf, doc_to_txt, doc_to_csv, doc_to_json, doc_to_image, doc_to_xls,
-    pdf_to_txt, pdf_to_doc, pdf_to_image, pdf_to_csv, pdf_to_xls,
+    pdf_to_txt, pdf_to_docx, pdf_to_image, pdf_to_csv, pdf_to_xls,
     json_to_pdf, json_to_doc, json_to_image, json_to_txt, json_to_csv, json_to_xls
 )
 
@@ -466,7 +466,7 @@ def test_pdf_to_txt(mock_pdfplumber_open, temp_dir):
 @pytest.mark.full
 @patch('pdfplumber.open')
 @patch('Converter.universal_converter.Document')
-def test_pdf_to_doc(mock_document, mock_pdfplumber_open, temp_dir):
+def test_pdf_to_docx(mock_document, mock_pdfplumber_open, temp_dir):
     dummy_pdf = os.path.join(temp_dir, "test.pdf")
     output_docx = os.path.join(temp_dir, "output.docx")
 
@@ -489,7 +489,7 @@ def test_pdf_to_doc(mock_document, mock_pdfplumber_open, temp_dir):
     # Create a dummy input file for os.path.exists check
     with open(dummy_pdf, 'w') as f: f.write("dummy")
 
-    result = pdf_to_doc(dummy_pdf, output_docx)
+    result = pdf_to_docx(dummy_pdf, output_docx)
 
     mock_pdfplumber_open.assert_called_once_with(dummy_pdf)
     mock_document.assert_called_once()
