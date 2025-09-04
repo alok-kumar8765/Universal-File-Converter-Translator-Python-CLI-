@@ -6,14 +6,7 @@ from unittest.mock import patch, MagicMock # Import MagicMock
 import pytest
 from unittest.mock import patch
 import Converter.universal_converter as uc  # import your module
-import pytest
-import os
 
-# Skip all tests when running in GitHub Actions CI
-pytestmark = pytest.mark.skipif(
-    os.getenv("GITHUB_ACTIONS") == "true",
-    reason="Skipping all tests in GitHub Actions CI"
-)
 
 # Assuming the converter functions are in the current notebook cell (or imported)
 
