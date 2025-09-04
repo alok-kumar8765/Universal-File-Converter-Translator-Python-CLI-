@@ -31,3 +31,6 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}   # only needed for private repos
+
+      - name: Run quick tests only
+        run: pytest -m quick --maxfail=1 --disable-warnings -q
