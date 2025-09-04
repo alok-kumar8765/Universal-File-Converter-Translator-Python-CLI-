@@ -25,3 +25,8 @@ jobs:
 
       - name: Run converter help
         run: python file_toolkit.py --help || true
+      
+      - name: Run tests with coverage
+        run: |
+            pip install pytest pytest-cov
+            pytest --cov=.
