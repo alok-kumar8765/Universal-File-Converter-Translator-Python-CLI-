@@ -1230,11 +1230,11 @@ def txt_to_doc(input_file, output_file):
         else:
             print(f"💡 Tip: If the text doesn’t render well, "
                   f"manually set the font in MS Word to '{chosen_font}' for proper display.")
-    
+
     except Exception as e:
         print(f"❌ TXT to DOC failed: {e}")
         return None
-        
+
 def txt_to_json(txt_path, json_path):
     try:
         ensure_parent_dir(json_path)
@@ -1253,7 +1253,7 @@ def txt_to_json(txt_path, json_path):
         with open(json_path, "w", encoding="utf-8") as out:
             json.dump(data, out, ensure_ascii=False, indent=2)
         return json_path
-        
+
     except Exception as e:
         print(f"❌ TXT to JSON failed: {e}")
         return None
@@ -1412,7 +1412,7 @@ def txt_to_xls(txt_path, xls_path, delimiter="\t"):
     except Exception as e:
         print("❌ TXT to XLS failed:", str(e))
         return None
-        
+
 # =========================
 # JSON Converters
 # =========================
@@ -1606,7 +1606,7 @@ def json_to_pdf(json_path, output_pdf):
     except Exception as e:
         print(f"❌ JSON to PDF failed: {e}")
         return None
-        
+
 def json_to_txt(json_path, txt_path):
     """
     Convert JSON/NDJSON to TXT.
@@ -1720,12 +1720,12 @@ def json_to_doc(json_file, output_file):
     except Exception as e:
         print(f"❌ JSON to DOC failed: {e}")
         return None
-        
+
 def json_to_image(json_path, output_path):
     try:
         if not json_path.endswith(".json"):
             raise RuntimeError("❌ Only JSON files are supported!")
-            
+
         if not os.path.exists(json_path):
             raise RuntimeError("❌ File not found!")
 
@@ -1806,7 +1806,7 @@ def json_to_image(json_path, output_path):
     except Exception as e:
         print(f"❌ JSON to XLSX failed: {e}")
         return None
-        
+
 def save_html_as_image(text, out_path, long_mode=False):
     html_content = f"""
     <html>
@@ -1854,22 +1854,69 @@ def save_html_as_image(text, out_path, long_mode=False):
 # PDF Helpers
 # =========================
 
-def pdf_to_txt(pdf_path, txt_path):
+def pdf_to_txt(pdf_path, txt_path, ocr_langs="eng+hin+jpn+chi_sim+chi_tra+deu+fra"):
+    '''Support English + Hindi + Japanese + Chinese (simplified + traditional)
+    *Note : sudo apt-get install tesseract-ocr \
+     tesseract-ocr-hin \
+     tesseract-ocr-jpn \
+     tesseract-ocr-chi-sim \
+     tesseract-ocr-chi-tra \
+     tesseract-ocr-deu \
+     tesseract-ocr-fra
+     install languange pack for better experience 
+    '''
     try:
         ensure_parent_dir(txt_path)
         if not pdf_path.endswith(".pdf"):
             raise RuntimeError("❌ Only PDF files are supported!")
-            
         if not os.path.exists(pdf_path):
             raise RuntimeError("❌ File not found!")
 
-        with pdfplumber.open(pdf_path) as pdf, open(txt_path, "w", encoding="utf-8") as out:
+        extracted_text = ""
+
+        # Try direct text extraction
+        with pdfplumber.open(pdf_path) as pdf:
             for page in pdf.pages:
-                text = page.extract_text() or ""
-                out.write(text.rstrip() + "\n\n")
+                text = page.extract_text()
+                if text and text.strip():
+                    extracted_text += text.rstrip() + "\n\n"
+
+        # Always run OCR as supplement
+        images = convert_from_path(pdf_path)
+        ocr_text = ""
+        for img in images:
+            ocr_text += pytesseract.image_to_string(img, lang=ocr_langs) + "\n"
+
+        # Combine both
+        final_text = (extracted_text + "\n" + ocr_text).strip()
+
+        with open(txt_path, "w", encoding="utf-8") as out:
+            out.write(final_text)
+
         return txt_path
     except Exception as e:
         print(f"❌ PDF to TXT failed: {e}")
+        return None
+
+def pdf_to_txt_ocr(pdf_path, txt_path, lang="eng+hin"):
+    '''Support English + Hindi'''
+    try:
+        images = convert_from_path(pdf_path)
+        full_text = ""
+        for img in images:
+            text = pytesseract.image_to_string(img, lang=lang)
+            full_text += text + "\n"
+
+        # Ensure the output directory exists
+        output_dir = os.path.dirname(txt_path)
+        if output_dir and not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        with open(txt_path, "w", encoding="utf-8") as f:
+            f.write(full_text)
+        return txt_path
+    except Exception as e:
+        print(f"❌ OCR failed: {e}")
         return None
 
 #def pdf_to_txt(pdf_path, txt_path):
@@ -1884,11 +1931,11 @@ def pdf_to_txt(pdf_path, txt_path):
 #        print(f"❌ PDF to TXT failed: {e}")
 #        return None
 
-def pdf_to_doc(pdf_path, docx_path):
+def pdf_to_docx(pdf_path, docx_path):
     try:
         if not pdf_path.endswith(".pdf"):
             raise RuntimeError("❌ Only PDF files are supported!")
-            
+
         if not os.path.exists(pdf_path):
             raise RuntimeError("❌ File not found!")
 
@@ -1942,7 +1989,7 @@ def pdf_to_image(pdf_path, out_dir, fmt="png", dpi=150, base_name="page"):
         os.makedirs(out_dir, exist_ok=True)
         if not pdf_path.endswith(".pdf"):
             raise RuntimeError("❌ Only PDF files are supported!")
-            
+
         if not os.path.exists(pdf_path):
             raise RuntimeError("❌ File not found!")
 
@@ -1993,7 +2040,7 @@ def pdf_to_image(pdf_path, out_dir, fmt="png", dpi=150, base_name="page"):
         print(f"❌ PDF to IMAGE failed: {e}")
         return None
 
-def pdf_to_csv(pdf_path, csv_path=None, xlsx_path=None, csv_delimiter=", " , excel_font_map=FONT_MAP_PDF, batch_log_every=1000):
+def pdf_to_csv(pdf_path, csv_path=None, xlsx_path=None, csv_delimiter=", " , excel_font_map=FALLBACK_FONTS_PDF, batch_log_every=1000):
     """
     PDF → CSV/XLSX converter (strict mode):
     - Converts only actual tables
@@ -2002,7 +2049,7 @@ def pdf_to_csv(pdf_path, csv_path=None, xlsx_path=None, csv_delimiter=", " , exc
     """
     if not pdf_path.endswith(".pdf"):
         raise RuntimeError("❌ Only PDF files are supported!")
-            
+
     if not os.path.exists(pdf_path):
         raise RuntimeError("❌ File not found!")
 
@@ -2109,7 +2156,7 @@ def pdf_to_xls(pdf_path, xls_path):
     try:
         if not pdf_path.endswith(".pdf"):
             raise RuntimeError("❌ Only PDF files are supported!")
-            
+
         if not os.path.exists(pdf_path):
             raise RuntimeError("❌ File not found!")
 
@@ -2122,16 +2169,16 @@ def pdf_to_xls(pdf_path, xls_path):
                     ws.append([str(x) if x is not None else "" for x in r])
         wb.save(xls_path)
         return xls_path
-    
+
     except Exception as e:
-        print((f"❌ PDF to XLS failed: {e}")
+        print(f"❌ PDF to XLS failed: {e}")
         return None
 
 def pdf_to_json(pdf_path, json_path):
     try:
         if not pdf_path.endswith(".pdf"):
             raise RuntimeError("❌ Only PDF files are supported!")
-            
+
         if not os.path.exists(pdf_path):
             raise RuntimeError("❌ File not found!")
 
@@ -2147,9 +2194,9 @@ def pdf_to_json(pdf_path, json_path):
         with open(json_path, "w", encoding="utf-8") as out:
             json.dump(pages_data, out, ensure_ascii=False, indent=2)
         return json_path
-    
+
     except Exception as e:
-        print((f"❌ PDF to JSON failed: {e}")
+        print(f"❌ PDF to JSON failed: {e}")
         return None
 
 # =========================
@@ -2227,7 +2274,7 @@ def doc_to_pdf(input_path: str, output_pdf: str, mode: str = "auto", raster_dpi:
     except Exception as e:
         print(f"❌ DOCX to PDF failed: {e}")
         return None
-        
+
 #def doc_to_txt(docx_path, txt_path):
 #    try:
 #        ensure_parent_dir(txt_path)
@@ -2247,7 +2294,7 @@ def doc_to_txt(docx_path, txt_path):
     try:
         if not docx_path.endswith(".docs"):
             raise RuntimeError("❌ Only DOCX files are supported!")
-            
+
         if not os.path.exists(docx_path):
             raise RuntimeError("❌ File not found!")
 
@@ -2262,7 +2309,7 @@ def doc_to_txt(docx_path, txt_path):
                     cells = [c.text.replace("\n"," ").strip() for c in row.cells]
                     out.write("\t".join(cells) + "\n")
         return txt_path
-      
+
     except Exception as e:
         print(f"❌ DOCX to TXT failed: {e}")
         return None
@@ -2429,7 +2476,7 @@ def doc_to_csv(input_path, csv_path):
             row_count = len(table.rows)
 
             if col_count < 4 or row_count < 2:
-                continue  
+                continue
 
             meaningful_rows = 0
             for row in table.rows:
@@ -2593,7 +2640,7 @@ def doc_to_json(input_path, json_path):
 # =========================
 # Image Helpers
 # =========================
-        
+
 def image_to_txt_ocr(in_path, txt_path, lang="auto"):
     """
     Extracts text from an image using OCR. Supports multiple languages.
@@ -2685,7 +2732,7 @@ def image_to_txt_ocr(in_path, txt_path, lang="auto"):
     except Exception as e:
         print(f"❌ OCR failed: {e}")
         return None
-        
+
 def image_to_image(in_path, out_path, fmt):
     try:
         # fmt: "PNG", "JPEG", etc.
@@ -2701,7 +2748,7 @@ def image_to_image(in_path, out_path, fmt):
     except Exception as e:
         raise RuntimeError(f"❌ Image conversion failed: {e}")
 
-        
+
 # =========================
 # Translation
 # =========================
@@ -2802,7 +2849,7 @@ CONVERTERS = {
     ("json", "csv"): json_to_csv,
     ("json", "xlsx"): json_to_xls,
     ("json", "txt"): json_to_txt,
-    ("json", "pdf"): jsonto_pdf,
+    ("json", "pdf"): json_to_pdf,
     ("json", "docx"): json_to_doc,
     ("json", "png"): json_to_image,
 
@@ -2813,15 +2860,16 @@ CONVERTERS = {
     ("docx", "csv"): doc_to_csv,
     ("docx", "json"): doc_to_json,
     ("docx", "image"): doc_to_image,
-    
+
     # PDF → (helpers)
     ("pdf", "txt"): pdf_to_txt,
-    ("pdf", "doc"): pdf_to_doc,
+    ("pdf", "docx"): pdf_to_docx,
     ("pdf", "image"): pdf_to_image,
     ("pdf", "csv"): pdf_to_csv,
     ("pdf", "xls"): pdf_to_xls,
     ("pdf", "json"): pdf_to_json,
-    
+    ("pdf", "txt ocr"): pdf_to_txt_ocr,
+
     # IMAGE → (helpers)
     ("png", "jpg"): image_to_image,
     ("png", "jpeg"): image_to_image,
@@ -2837,7 +2885,60 @@ CONVERTERS = {
     ("gif", "txt"): image_to_txt_ocr,
     ("tiff", "txt"): image_to_txt_ocr,
     ("bmp", "txt"): image_to_txt_ocr,
-    
+
+}
+
+SUPPORTED_MENUS = {
+    "pdf": [
+        ("1", "PDF → TXT", "txt"),
+        ("2", "PDF → DOCX", "docx"),
+        ("3", "PDF → PNG (image)", "png"),
+        ("4", "PDF → CSV", "csv"),
+        ("5", "PDF → XLSX", "xlsx"),
+        ("6", "PDF → JSON", "json"),
+        ("7", "PDF → TXT OCR", "txt ocr"),
+    ],
+    "csv": [
+        ("1", "CSV → PDF", "pdf"),
+        ("2", "CSV → TXT", "txt"),
+        ("3", "CSV → PNG (image)", "png"),
+        ("4", "CSV → DOCX", "docx"),
+        ("5", "CSV → XLSX", "xlsx"),
+        ("6", "CSV → JSON", "json"),
+    ],
+    "xls": [
+        ("1", "XLSX → CSV", "csv"),
+        ("2", "XLSX → PDF", "pdf"),
+        ("3", "XLSX → TXT", "txt"),
+        ("4", "XLSX → DOCX", "docx"),
+        ("5", "XLSX → JSON", "json"),
+        ("6", "XLSX → PNG (image)", "png"),
+    ],
+    "txt": [
+        ("1", "TXT → CSV", "csv"),
+        ("2", "TXT → PDF", "pdf"),
+        ("3", "TXT → DOCX", "docx"),
+        ("4", "TXT → JSON", "json"),
+        ("5", "TXT → XLSX", "xlsx"),
+        ("6", "TXT → PNG (image)", "png"),
+    ],
+    "json": [
+        ("1", "JSON → CSV", "csv"),
+        ("2", "JSON → TXT", "txt"),
+        ("3", "JSON → XLSX", "xls"),
+        ("4", "JSON → DOCX", "docx"),
+        ("5", "JSON → PDF", "pdf"),
+        ("6", "JSON → PNG (image)", "png"),
+    ],
+    "image": [
+        ("1", "JPG → PNG", "png"),
+        ("2", "PNG → JPG", "jpg"),
+        ("3", "JPG → JPEG", "jpeg"),
+        ("4", "PNG → JPEG", "jpeg"),
+        ("5", "JPEG → PNG", "png"),
+        ("6", "JPEG → JPG", "jpg"),
+        ("7", "GIF → PNG", "png"),
+    ],
 }
 
 def infer_ext(path):
@@ -2855,7 +2956,7 @@ def run_conversion(src_fmt, dst_fmt, in_path, out_path):
 # =========================
 
 def cli_menu():
-    
+
     try:
         from google.colab import files
     except ImportError:
@@ -2876,7 +2977,7 @@ def cli_menu():
                     in_path = list(uploaded.keys())[0]
                 else:
                     in_path = input("Enter path of File): ").strip()
-                
+
                 #in_path = input("Enter input file path: ").strip()
                 if not os.path.exists(in_path):
                     print("❌ Input file not found.")
@@ -2889,24 +2990,43 @@ def cli_menu():
                         print("❌ Could not infer source format. Provide explicitly.")
                         continue
 
-                print("Supported targets for your source may include: csv, xlsx, pdf, docx, txt, json, png")
-                dst_fmt = input("Enter target format: ").strip().lower()
-                if not dst_fmt:
-                    print("❌ Target format required.")
-                    continue
+                # ✅ NEW DYNAMIC MENU
+                if src_fmt in SUPPORTED_MENUS:
+                    print("\nSupported conversions:")
+                    for opt, desc, _ in SUPPORTED_MENUS[src_fmt]:
+                        print(f"{opt}. {desc}")
+                    fmt_choice = input("Select target format: ").strip()
 
+                    match = next((m for m in SUPPORTED_MENUS[src_fmt] if m[0] == fmt_choice), None)
+                    if not match:
+                        print("❌ Invalid choice!")
+                        continue
+
+                    _, _, dst_fmt = match
+                else:
+                    dst_fmt = input("Enter target format: ").strip().lower()
+                    if not dst_fmt:
+                        print("❌ Target format required.")
+                        continue
+
+                # Output path
                 out_path = input("Enter output file path (leave blank to auto): ").strip()
                 if not out_path:
                     base, _ = os.path.splitext(in_path)
                     out_path = f"{base}.{dst_fmt}"
 
-                result = run_conversion(src_fmt, dst_fmt, in_path, out_path)
-                if result:
-                    print(f"✅ Converted successfully: {result}")
-                    # Optional auto-delete (uncomment if needed)
-                    # schedule_delete(result)
+                # Run conversion
+                func = CONVERTERS.get((src_fmt, dst_fmt))
+                if func:
+                    try:
+                        result = func(in_path, out_path)
+                        if result:
+                            print(f"✅ Converted successfully: {result}")
+                    except Exception as e:
+                        print(f"❌ Conversion failed: {e}")
                 else:
-                    print("❌ Conversion failed.")
+                    print(f"❌ Conversion not supported: {src_fmt} → {dst_fmt}")
+
             except Exception as e:
                 print(f"❌ Error: {e}")
 
