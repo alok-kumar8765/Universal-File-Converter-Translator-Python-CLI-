@@ -268,7 +268,7 @@ When you run the program, you’ll see options to convert a TXT file into multip
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)  
 [![License](https://img.shields.io/github/license/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-.svg)](https://github.com/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/blob/main/LICENSE)
 
-![Code Coverage](https://codecov.io/gh/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-/branch/main/graph/badge.svg)](https://codecov.io/gh/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-)  
+![Code Coverage](https://img.shields.io/codecov/c/github/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-)  
 ![Issues](https://img.shields.io/github/issues/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-)  
 ![Pull Requests](https://img.shields.io/github/issues-pr/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-)  
 ![Last Commit](https://img.shields.io/github/last-commit/alok-kumar8765/Universal-File-Converter-Translator-Python-CLI-)  
