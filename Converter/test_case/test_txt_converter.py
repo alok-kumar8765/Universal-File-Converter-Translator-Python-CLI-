@@ -1,16 +1,37 @@
+import os
+import csv
+import json
+import shutil
+import tempfile
 import pytest
 import os
-import shutil
+import csv
 import json
-from unittest.mock import patch, MagicMock # Import MagicMock
+import shutil
+import tempfile
 import pytest
-from unittest.mock import patch
-import Converter.universal_converter as uc  # import your module
+from unittest.mock import patch, MagicMock
 
+import Converter.universal_converter as uc
 
-# Assuming the converter functions are in the current notebook cell (or imported)
+# Dependencies for dummy file creation
+from docx import Document
+from openpyxl import Workbook, load_workbook
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+from PIL import Image, ImageDraw, ImageFont
 
-# --- Helper to create dummy files ---
+from Converter.universal_converter import (
+    csv_to_xls, csv_to_pdf, csv_to_doc, csv_to_txt, csv_to_json, csv_to_image,
+    xls_to_csv, xls_to_doc, xls_to_txt, xls_to_pdf, xls_to_json, xls_to_image,
+    image_to_txt_ocr, image_to_image,
+    txt_to_pdf, txt_to_doc, txt_to_json, txt_to_csv, txt_to_image,
+    doc_to_pdf, doc_to_txt, doc_to_csv, doc_to_json, doc_to_image, doc_to_xls,
+    pdf_to_txt, pdf_to_doc, pdf_to_image, pdf_to_csv, pdf_to_xls,
+    json_to_pdf, json_to_doc, json_to_image, json_to_txt, json_to_csv, json_to_xls
+)
+
+# ---------------- Helpers to create dummy files ----------------
 def create_dummy_csv(filename="dummy.csv"):
     with open(filename, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
@@ -29,8 +50,7 @@ def create_dummy_xlsx(filename="dummy.xlsx"):
     return filename
 
 def create_dummy_txt(filename="dummy.txt"):
-    content = """
-This is a test text file.
+    content = """This is a test text file.
 It has multiple lines.
 Including some Unicode characters: नमस्ते
 And a blank line above.
@@ -54,11 +74,9 @@ def create_dummy_docx(filename="dummy.docx"):
     return filename
 
 def create_dummy_pdf(filename="dummy.pdf"):
-    # Using reportlab to create a simple PDF
     c = canvas.Canvas(filename, pagesize=A4)
     c.drawString(100, 750, "Test PDF Content")
     c.drawString(100, 735, "With some Hindi: नमस्ते")
-    # Add a simple "table" like structure
     c.drawString(100, 700, "Col1 | Col2 | Col3")
     c.drawString(100, 685, "Data1 | Data2 | Data3")
     c.save()
@@ -74,18 +92,17 @@ def create_dummy_json(filename="dummy.json"):
     return filename
 
 def create_dummy_image(filename="dummy.png"):
-    img = Image.new('RGB', (100, 50), color = (255, 255, 255))
+    img = Image.new('RGB', (100, 50), color=(255, 255, 255))
     d = ImageDraw.Draw(img)
-    # Use a font that supports Unicode if possible
     try:
-        font = ImageFont.truetype("/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf", 15)
+        font = ImageFont.truetype("DejaVuSans.ttf", 15)
     except Exception:
-         font = ImageFont.load_default()
-    d.text((10,10), "Test Image नमस्ते", fill=(0,0,0), font=font)
+        font = ImageFont.load_default()
+    d.text((10, 10), "Test Image नमस्ते", fill=(0, 0, 0), font=font)
     img.save(filename)
     return filename
 
-# --- Fixture for temporary directory ---
+# ---------------- Fixtures ----------------
 @pytest.fixture
 def temp_dir(request):
     tmpdir = tempfile.mkdtemp()
@@ -94,12 +111,16 @@ def temp_dir(request):
     request.addfinalizer(cleanup)
     return tmpdir
 
-# --- Mock the schedule_delete function ---
 @pytest.fixture(autouse=True)
 def mock_schedule_delete():
     with patch('Converter.universal_converter.schedule_delete') as mock_delete:
         yield mock_delete
 
+# 🔥 Prevent hanging due to input()
+@pytest.fixture(autouse=True)
+def auto_mock_input(monkeypatch):
+    monkeypatch.setattr("builtins.input", lambda *args, **kwargs: "1")
+    
 # --- Test Cases ---
 
 # CSV Conversions
@@ -204,7 +225,7 @@ def test_xls_to_json(temp_dir):
     assert data[1]["colB"] == "मराठी"
 
 # Image Conversions (Basic tests, OCR accuracy varies)
-@patch('__main__._get_easyocr', return_value=MagicMock()) # Mock EasyOCR initialization
+@patch('Converter.universal_converter._get_easyocr', return_value=MagicMock()) # Mock EasyOCR initialization
 @patch('pytesseract.image_to_string') # Mock Tesseract
 def test_image_to_txt_ocr(mock_tesseract, mock_easyocr_reader, temp_dir):
     # Configure mocks
@@ -246,7 +267,7 @@ def test_txt_to_pdf(temp_dir):
     assert os.path.exists(result)
     assert os.path.getsize(result) > 0
 
-@patch('__main__.Document') # Mock Document to avoid actual file creation/dependencies
+@patch('Converter.universal_converter.Document') # Mock Document to avoid actual file creation/dependencies
 def test_txt_to_doc(mock_document, temp_dir):
     txt_file = create_dummy_txt(os.path.join(temp_dir, "test.txt"))
     docx_file = os.path.join(temp_dir, "output.docx")
@@ -272,10 +293,10 @@ def test_txt_to_json(temp_dir):
     assert "This is a test text file." in data
 
 # DOC/DOCX Conversions (Require LibreOffice or heavy mocking)
-@patch('__main__.convert_doc_to_docx_if_needed', return_value='mocked_input.docx')
-@patch('__main__.convert_docx_to_pdf_libreoffice')
-@patch('__main__.mammoth.convert_to_html')
-@patch('__main__.pdfkit.from_file')
+@patch('Converter.universal_converter.convert_doc_to_docx_if_needed', return_value='mocked_input.docx')
+@patch('Converter.universal_converter.convert_docx_to_pdf_libreoffice')
+@patch('Converter.universal_converter.mammoth.convert_to_html')
+@patch('Converter.universal_converter.pdfkit.from_file')
 def test_doc_to_pdf_auto(mock_pdfkit, mock_mammoth, mock_libreoffice_pdf, mock_doc_to_docx, temp_dir):
     dummy_doc = os.path.join(temp_dir, "test.doc")
     output_pdf = os.path.join(temp_dir, "output.pdf")
@@ -290,7 +311,7 @@ def test_doc_to_pdf_auto(mock_pdfkit, mock_mammoth, mock_libreoffice_pdf, mock_d
 
 
     # Mock the table inspection within doc_to_pdf
-    with patch('__main__.Document') as mock_Document_for_table_check:
+    with patch('Converter.universal_converter.Document') as mock_Document_for_table_check:
         mock_doc_instance = MagicMock()
         mock_Document_for_table_check.return_value = mock_doc_instance
 
@@ -331,9 +352,9 @@ def test_doc_to_pdf_auto(mock_pdfkit, mock_mammoth, mock_libreoffice_pdf, mock_d
         mock_pdfkit.assert_called_once()
         # We can't easily check the final PDF content here as it's mocked
 
-@patch('__main__.convert_doc_to_docx_if_needed', return_value='mocked_input.docx')
-@patch('__main__.convert_docx_to_pdf_libreoffice')
-@patch('__main__.convert_from_path')
+@patch('Converter.universal_converter.convert_doc_to_docx_if_needed', return_value='mocked_input.docx')
+@patch('Converter.universal_converter.convert_docx_to_pdf_libreoffice')
+@patch('Converter.universal_converter.convert_from_path')
 @patch('PIL.Image.Image.save')
 def test_doc_to_pdf_image(mock_image_save, mock_convert_from_path, mock_libreoffice_pdf, mock_doc_to_docx, temp_dir):
     dummy_doc = os.path.join(temp_dir, "test.doc")
@@ -390,7 +411,7 @@ def test_pdf_to_txt(mock_pdfplumber_open, temp_dir):
     assert "Page 2 Text हिंदी" in content
 
 @patch('pdfplumber.open')
-@patch('__main__.Document')
+@patch('Converter.universal_converter.Document')
 def test_pdf_to_doc(mock_document, mock_pdfplumber_open, temp_dir):
     dummy_pdf = os.path.join(temp_dir, "test.pdf")
     output_docx = os.path.join(temp_dir, "output.docx")
@@ -516,7 +537,7 @@ def test_json_to_pdf(mock_pdfkit_from_file, temp_dir):
     mock_pdfkit_from_file.assert_called_once()
     assert result == pdf_file # Assuming success returns the output path
 
-@patch('__main__.Document')
+@patch('Converter.universal_converter.Document')
 def test_json_to_doc(mock_document, temp_dir):
     json_file = create_dummy_json(os.path.join(temp_dir, "test.json"))
     docx_file = os.path.join(temp_dir, "output.docx")
@@ -533,7 +554,7 @@ def test_json_to_doc(mock_document, temp_dir):
     mock_doc_instance.save.assert_called_once_with(docx_file)
     assert result == docx_file
 
-@patch('__main__.save_html_as_image') # Mock the helper image saving function
+@patch('Converter.universal_converter.save_html_as_image') # Mock the helper image saving function
 @patch('builtins.input', return_value='1') # Mock user input for single image choice
 def test_json_to_image_single(mock_input, mock_save_html_as_image, temp_dir):
     json_file = create_dummy_json(os.path.join(temp_dir, "test.json"))
