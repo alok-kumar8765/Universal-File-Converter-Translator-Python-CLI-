@@ -1,1 +1,0 @@
-pytest -m "quick" -v
