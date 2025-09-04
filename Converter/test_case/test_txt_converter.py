@@ -5,7 +5,7 @@ import json
 from unittest.mock import patch, MagicMock # Import MagicMock
 import pytest
 from unittest.mock import patch
-import converter.universal_converter as uc  # import your module
+import Converter.universal_converter as uc  # import your module
 
 # Assuming the converter functions are in the current notebook cell (or imported)
 
@@ -96,7 +96,7 @@ def temp_dir(request):
 # --- Mock the schedule_delete function ---
 @pytest.fixture(autouse=True)
 def mock_schedule_delete():
-    with patch('converter.universal_converter.schedule_delete') as mock_delete:
+    with patch('Converter.universal_converter.schedule_delete') as mock_delete:
         yield mock_delete
 
 # --- Test Cases ---
