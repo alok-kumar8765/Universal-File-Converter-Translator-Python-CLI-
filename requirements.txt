@@ -10,9 +10,40 @@ googletrans==4.0.0-rc1
 deep-translator
 reportlab
 tkinter
-tk
+#tk
 wkhtmltopdf
 pdfkit
 python-docx
 langdetect
 pdfminer.six
+pdf2docx
+PyPDF2
+pytesseract
+pdf2image
+pytest
+pypandoc
+reportlab
+langid
+mammoth
+weasyprint
+tdqm
+ijson
+easyocr
+torch
+torchvision
+torchaudio
+tesseract
+
+# ======================================
+# Install tesseract & check languages
+# ======================================
+
+#!tesseract --list-langs
+
+#!sudo apt-get install tesseract-ocr \
+#     tesseract-ocr-hin \
+#     tesseract-ocr-jpn \
+#     tesseract-ocr-chi-sim \
+#     tesseract-ocr-chi-tra \
+#     tesseract-ocr-deu \
+#     tesseract-ocr-fra
